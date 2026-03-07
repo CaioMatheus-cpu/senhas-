@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Parque Pai e Filho - Senhas Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- LADO ESQUERDO - INFORMAÇÕES DO EVENTO -->
+        <div class="card">
+            <div class="logo">
+                <i class="fas fa-tree"></i>
+                <span>Parque Pai e Filho</span>
+            </div>
+            <h1>🏆 15 MIL EM PRÊMIOS 🏆</h1>
+            <p><i class="fas fa-map-marker-alt"></i> Sítio Saco do Romão / Flores-PE</p>
+
+            <div class="premios-info"
+                style="background: rgba(251,191,36,0.2); margin-bottom: 15px; padding: 15px; border-radius: 12px;">
+                <p><i class="fas fa-trophy"></i> <strong>PROFISSIONAL:</strong> 10MIL - R$250 (3 bois)</p>
+            </div>
+
+            <div class="mapa-senhas">
+                <div class="mapa-dia mapa-sexta">
+                    <h4><i class="fas fa-sun"></i> Sexta-feira</h4>
+                    <p><strong>Profissional:</strong> 001 a 100</p>
+                    <p><strong>Aspirante:</strong> 1.001 a 1.150</p>
+                    <p style="color: #fbbf24; margin-top: 8px; font-size: 0.85rem;">✅ Direito a boi de TV se fizer senha
+                        limpa</p>
+                </div>
+                <div class="mapa-dia mapa-sabado">
+                    <h4><i class="fas fa-moon"></i> Sábado</h4>
+                    <p><strong>Profissional:</strong> 101 a 300</p>
+                    <p><strong>Aspirante:</strong> 1.151 a 1.300</p>
+                    <p style="color: #94a3b8; margin-top: 8px; font-size: 0.85rem;">➡️ Passa para 2ª rodada</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <div class="premios-info"
+                    style="margin-bottom: 10px; padding: 12px; border-radius: 12px; background: rgba(251,191,36,0.1);">
+                    <p><i class="fas fa-crown"></i> <strong>MASTER:</strong> 40% - R$150 (2 bois) - Senhas 2000-2300</p>
+                </div>
+                <div class="premios-info" style="padding: 12px; border-radius: 12px; background: rgba(251,191,36,0.1);">
+                    <p><i class="fas fa-female"></i> <strong>FEMININA:</strong> 30% - R$100 (2 bois) - Senhas 3000-3300
+                    </p>
+                </div>
+            </div>
+
+            <div class="regras-box">
+                <h3><i class="fas fa-exclamation-triangle"></i> REGRAS</h3>
+                <ul>
+                    <li><strong>Sexta:</strong> Senha limpa na sequência = boi de TV + 2ª rodada</li>
+                    <li><strong>Sábado:</strong> Só passa para 2ª rodada</li>
+                    <li><strong>Rabo da gata:</strong> +1 boi para todas categorias</li>
+                    <li><strong>Limite:</strong> 4 senhas por vaqueiro</li>
+                    <li><strong>Boi de TV:</strong> R$100,00</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- LADO DIREITO - FORMULÁRIO DE INSCRIÇÃO -->
+        <div class="card">
+            <div class="form-title">
+                <h2><i class="fas fa-edit"></i> INSCRIÇÃO</h2>
+            </div>
+
+            <form id="formMatricula">
+                <div class="category">
+                    <label for="nomeVaqueiro" class="required">Nome do Vaqueiro</label>
+                    <input type="text" id="nomeVaqueiro" placeholder="Digite seu nome completo" required>
+                </div>
+
+                <div class="category">
+                    <label for="nomeEsteira" class="required">Nome do Esteira</label>
+                    <input type="text" id="nomeEsteira" placeholder="Digite o nome do esteira" required>
+                </div>
+
+                <div class="category">
+                    <label for="representacao">Representação</label>
+                    <input type="text" id="representacao" placeholder="Opcional">
+                </div>
+
+                <div class="category">
+                    <label for="categoria" class="required">Categoria</label>
+                    <select id="categoria" required>
+                        <option value="">Selecione</option>
+                        <option value="Profissional">🏆 Profissional - R$250 (3 bois)</option>
+                        <option value="Aspirante">⭐ Aspirante - R$150 (2 bois)</option>
+                        <option value="Master">👑 Master - 40% - R$150 (2 bois)</option>
+                        <option value="Feminina">👧 Feminina - 30% - R$100 (2 bois)</option>
+                    </select>
+                </div>
+
+                <!-- CAMPO DIA (SÓ P/ PROFISSIONAL E ASPIRANTE) -->
+                <div class="category hidden" id="campoDiaCorrida">
+                    <label for="diaCorrida" class="required">Dia da Corrida</label>
+                    <select id="diaCorrida" required>
+                        <option value="">Selecione</option>
+                        <option value="Sexta">Sexta-feira</option>
+                        <option value="Sabado">Sábado</option>
+                    </select>
+                </div>
+
+                <!-- CAMPO BOI TV -->
+                <div class="category">
+                    <label for="boitv" class="required">Boi de TV? (R$100)</label>
+                    <select id="boitv" required>
+                        <option value="">Selecione</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                </div>
+
+                <!-- SEÇÃO PROFISSIONAL -->
+                <div class="category hidden" id="boxProfissional">
+                    <h3>
+                        <span class="badge-categoria profissional">🏆 PROFISSIONAL</span>
+                    </h3>
+                    <div
+                        style="background: rgba(251,191,36,0.1); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                        <p id="textoAvisoProfissional" style="margin: 0; font-size: 0.9rem;">Selecione o dia</p>
+                    </div>
+                    <label for="senhaProfissional">Número da Senha</label>
+                    <select id="senhaProfissional" class="cursoSelect" disabled>
+                        <option value="">Primeiro selecione o dia</option>
+                    </select>
+                </div>
+
+                <!-- SEÇÃO ASPIRANTE -->
+                <div class="category hidden" id="boxAspirante">
+                    <h3>
+                        <span class="badge-categoria aspirante">⭐ ASPIRANTE</span>
+                    </h3>
+                    <div
+                        style="background: rgba(251,191,36,0.1); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                        <p id="textoAvisoAspirante" style="margin: 0; font-size: 0.9rem;">Selecione o dia</p>
+                    </div>
+                    <label for="senhaAspirante">Número da Senha</label>
+                    <select id="senhaAspirante" class="cursoSelect" disabled>
+                        <option value="">Primeiro selecione o dia</option>
+                    </select>
+                </div>
+
+                <!-- SEÇÃO MASTER -->
+                <div class="category hidden" id="boxMaster">
+                    <h3>
+                        <span class="badge-categoria master">👑 MASTER</span>
+                    </h3>
+                    <div
+                        style="background: rgba(251,191,36,0.1); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                        <p style="margin: 0;"><i class="fas fa-hashtag"></i> Senhas: 2000 a 2300</p>
+                    </div>
+                    <label for="senhaMaster">Número da Senha</label>
+                    <select id="senhaMaster" class="cursoSelect">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+
+                <!-- SEÇÃO FEMININA -->
+                <div class="category hidden" id="boxFeminina">
+                    <h3>
+                        <span class="badge-categoria feminina">👧 FEMININA</span>
+                    </h3>
+                    <div
+                        style="background: rgba(251,191,36,0.1); padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                        <p style="margin: 0;"><i class="fas fa-hashtag"></i> Senhas: 3000 a 3300</p>
+                    </div>
+                    <label for="senhaFeminina">Número da Senha</label>
+                    <select id="senhaFeminina" class="cursoSelect">
+                        <option value="">Selecione</option>
+                    </select>
+                </div>
+
+                <!-- AVISO LIMITE -->
+                <div style="background: rgba(251,191,36,0.1); padding: 12px; border-radius: 12px; margin: 15px 0;">
+                    <p style="margin: 0; font-size: 0.9rem;"><i class="fas fa-info-circle" style="color: #fbbf24;"></i>
+                        <strong>Limite:</strong> 4 senhas por vaqueiro
+                    </p>
+                </div>
+
+                <button type="button" id="enviar" class="btn">
+                    <i class="fab fa-whatsapp"></i> Enviar via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>© Parque Pai e Filho</p>
+        <p>
+            <i class="fas fa-phone-alt"></i> (83) 99972-4047
+        </p>
+        <p>
+            Desenvolvido por Vaquejada Tech | &copy; 2024
+        </p>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>
