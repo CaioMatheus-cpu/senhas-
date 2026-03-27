@@ -92,16 +92,16 @@ function atualizarSenhasDisponiveis() {
     selectFeminina.insertBefore(new Option('Selecione', ''), selectFeminina.firstChild);
 
     if (profValor && Array.from(selectProfissional.options).find(o => o.value === profValor)) selectProfissional.value = profValor;
-    else if (profValor) alert("A senha Profissional que você escolheu acabou de ser reservada por outra pessoa!");
+    else if (profValor && !window.isSubmitting) alert("A senha Profissional que você escolheu acabou de ser reservada por outra pessoa!");
 
     if (aspValor && Array.from(selectAspirante.options).find(o => o.value === aspValor)) selectAspirante.value = aspValor;
-    else if (aspValor) alert("A senha Aspirante que você escolheu acabou de ser reservada por outra pessoa!");
+    else if (aspValor && !window.isSubmitting) alert("A senha Aspirante que você escolheu acabou de ser reservada por outra pessoa!");
 
     if (masterValor && Array.from(selectMaster.options).find(o => o.value === masterValor)) selectMaster.value = masterValor;
-    else if (masterValor) alert("A senha Master que você escolheu acabou de ser reservada por outra pessoa!");
+    else if (masterValor && !window.isSubmitting) alert("A senha Master que você escolheu acabou de ser reservada por outra pessoa!");
 
     if (femValor && Array.from(selectFeminina.options).find(o => o.value === femValor)) selectFeminina.value = femValor;
-    else if (femValor) alert("A senha Feminina que você escolheu acabou de ser reservada por outra pessoa!");
+    else if (femValor && !window.isSubmitting) alert("A senha Feminina que você escolheu acabou de ser reservada por outra pessoa!");
 }
 
 // Inicializa options Master e Feminina a 1a vez
@@ -267,57 +267,71 @@ document.getElementById("enviar").addEventListener("click", async function () {
 
     senhasUtilizadas[chaveVaqueiro]++;
 
-    let mensagem = `🏇 *PARQUE PAI E FILHO* 🏇%0A`;
-    mensagem += `📍 Sítio Saco do Romão/Flores-PE%0A`;
-    mensagem += `🏆 15MIL EM PRÊMIOS%0A%0A`;
-    mensagem += `👤 *Vaqueiro:* ${nome}%0A`;
-    mensagem += `🐎 *Esteira:* ${esteira}%0A`;
+    let mensagem = `🏇 PARQUE PAI E FILHO 🏇\n`;
+    mensagem += `📍 Sítio Saco do Romão/Flores-PE\n`;
+    mensagem += `🏆 15MIL EM PRÊMIOS\n\n`;
+    mensagem += `👤 Vaqueiro: ${nome}\n`;
+    mensagem += `🐎 Esteira: ${esteira}\n`;
 
-    if (representacao) mensagem += `🏷 *Representação:* ${representacao}%0A`;
+    if (representacao) mensagem += `🏷 Representação: ${representacao}\n`;
 
     if (categoria === "Profissional" || categoria === "Aspirante") {
-        mensagem += `📅 *Dia:* ${diaCorrida}%0A`;
+        mensagem += `📅 Dia: ${diaCorrida}\n`;
     }
 
     let valorTotal = 0;
 
     if (categoria === "Profissional") {
         valorTotal += 250;
-        mensagem += `🏆 *Categoria:* PROFISSIONAL%0A`;
-        mensagem += `💰 10MIL - R$250 (3 bois)%0A`;
-        mensagem += `🔢 *Senha:* ${senhaProf}%0A`;
+        mensagem += `🏆 Categoria: PROFISSIONAL\n`;
+        mensagem += `💰 10MIL - R$250 (3 bois)\n`;
+        mensagem += `🔢 Senha: ${senhaProf}\n`;
     }
 
     if (categoria === "Aspirante") {
         valorTotal += 150;
-        mensagem += `⭐ *Categoria:* ASPIRANTE%0A`;
-        mensagem += `💰 5MIL - R$150 (2 bois)%0A`;
-        mensagem += `🔢 *Senha:* ${senhaAsp}%0A`;
+        mensagem += `⭐ Categoria: ASPIRANTE\n`;
+        mensagem += `💰 5MIL - R$150 (2 bois)\n`;
+        mensagem += `🔢 Senha: ${senhaAsp}\n`;
     }
 
     if (categoria === "Master") {
         valorTotal += 150;
-        mensagem += `👑 *Categoria:* MASTER%0A`;
-        mensagem += `💰 40% - R$150 (2 bois)%0A`;
-        mensagem += `🔢 *Senha:* ${senhaMaster}%0A`;
+        mensagem += `👑 Categoria: MASTER\n`;
+        mensagem += `💰 40% - R$150 (2 bois)\n`;
+        mensagem += `🔢 Senha: ${senhaMaster}\n`;
     }
 
     if (categoria === "Feminina") {
         valorTotal += 100;
-        mensagem += `👧 *Categoria:* FEMININA%0A`;
-        mensagem += `💰 30% - R$100 (2 bois)%0A`;
-        mensagem += `🔢 *Senha:* ${senhaFem}%0A`;
+        mensagem += `👧 Categoria: FEMININA\n`;
+        mensagem += `💰 30% - R$100 (2 bois)\n`;
+        mensagem += `🔢 Senha: ${senhaFem}\n`;
     }
 
     if (boitv === 'Sim') {
         valorTotal += 100;
     }
 
-    mensagem += `📺 *Boi TV:* ${boitv}${boitv === 'Sim' ? ' (+R$100)' : ''}%0A%0A`;
-    mensagem += `🔹 *Rabo da gata:* +1 boi%0A`;
-    mensagem += `🔹 *Restam:* ${4 - senhasUtilizadas[chaveVaqueiro]} de 4 senhas%0A`;
-    mensagem += `_Inscrição online_`;
+    mensagem += `📺 Boi TV: ${boitv}${boitv === 'Sim' ? ' ( R$100)' : ''}\n\n`;
+    mensagem += `🔹 Rabo da gata:  1 boi\n`;
+    mensagem += `🔹 Restam: ${4 - senhasUtilizadas[chaveVaqueiro]} de 4 senhas\n`;
+    mensagem += `Inscrição online`;
     const telefone = "5583999587010";
+    const waUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+    // Tenta abrir o WhatsApp PRIMEIRO para garantir o redirecionamento (evita bloqueador de popup)
+    const waWindow = window.open(waUrl, "_blank");
+
+    // Verifica se conseguiu abrir
+    if (!waWindow || waWindow.closed || typeof waWindow.closed === 'undefined') {
+        alert("⚠️ O redirecionamento para o WhatsApp foi bloqueado!\n\nPor favor, permita os pop-ups do seu navegador para esta página e tente novamente.");
+        senhasUtilizadas[chaveVaqueiro]--; // Remove da contagem já que falhou
+        return;
+    }
+
+    window.isSubmitting = true;
+
     const btnEnvia = document.getElementById("enviar");
     const btnTextoOriginal = btnEnvia.innerHTML;
 
@@ -347,18 +361,24 @@ document.getElementById("enviar").addEventListener("click", async function () {
             alert("Erro ao registrar no banco de dados. Verifique a conexão.");
             btnEnvia.innerHTML = btnTextoOriginal;
             btnEnvia.disabled = false;
+            window.isSubmitting = false;
             return;
         }
     }
 
-    btnEnvia.innerHTML = btnTextoOriginal;
-    btnEnvia.disabled = false;
+    btnEnvia.innerHTML = '<i class="fas fa-check"></i> Enviado!';
+    setTimeout(() => {
+        btnEnvia.innerHTML = btnTextoOriginal;
+        btnEnvia.disabled = false;
+    }, 3000);
 
     if (categoria === "Profissional") removerNumeroEscolhido(selectProfissional);
     if (categoria === "Aspirante") removerNumeroEscolhido(selectAspirante);
     if (categoria === "Master") removerNumeroEscolhido(selectMaster);
     if (categoria === "Feminina") removerNumeroEscolhido(selectFeminina);
 
-    alert(`✅ Inscrição enviada! Você usou ${senhasUtilizadas[chaveVaqueiro]} de 4 senhas.`);
-    window.open(`https://wa.me/${telefone}?text=${mensagem}`, "_blank");
+    window.isSubmitting = false;
+
+    // Não precisa de alert com window.open pois já foi redirecionado
+    console.log(`✅ Inscrição enviada! Você usou ${senhasUtilizadas[chaveVaqueiro]} de 4 senhas.`);
 });
