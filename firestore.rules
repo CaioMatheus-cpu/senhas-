@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Permite que usuários autenticados leiam a coleção de senhas registradas
+    match /senhas_registradas/{document=**} {
+      // Leitura permitida para todos (necessário para verificar senhas disponíveis)
+      allow read: if true;
+
+      // Criação de novo documento apenas com validação de campos obrigatórios
+      allow create: if request.auth != null && validarNovaSenh();
+
+      // Exclusão apenas para admin (será controladed pelo frontend com localStorage)
+      // Recomendação: Implementar autenticação Firebase real no futuro
+      allow delete: if false;
+
+      // Atualização bloqueada para manter integridade dos dados
+      allow update: if false;
+    }
+
+    // Valida campos obrigatórios na criação
+    function validarNovaSenh() {
+      let dados = request.resource.data;
+
+      return dados.size() > 0 &&
+             dados.keys().hasAll(['nome', 'esteira', 'categoria', 'senha', 'dia']) &&
+             dados.nome is string &&
+             dados.nome.size() > 0 &&
+             dados.esteira is string &&
+             dados.esteira.size() > 0 &&
+             dados.categoria is string &&
+             dados.categoria.size() > 0 &&
+             dados.senha is string &&
+             dados.senha.size() == 4 &&
+             dados.dia is string &&
+             (dados.dia == "Sexta" || dados.dia == "Sábado");
+    }
+  }
+}
