@@ -23,17 +23,15 @@ service cloud.firestore {
       let dados = request.resource.data;
 
       return dados.size() > 0 &&
-             dados.keys().hasAll(['nome', 'esteira', 'categoria', 'senha', 'dia']) &&
-             dados.nome is string &&
-             dados.nome.size() > 0 &&
+             dados.keys().hasAll(['vaqueiro', 'esteira', 'categoria', 'senha']) &&
+             dados.vaqueiro is string &&
+             dados.vaqueiro.size() > 0 &&
              dados.esteira is string &&
              dados.esteira.size() > 0 &&
              dados.categoria is string &&
              dados.categoria.size() > 0 &&
              dados.senha is string &&
-             dados.senha.size() == 4 &&
-             dados.dia is string &&
-             (dados.dia == "Sexta" || dados.dia == "Sábado");
+             dados.senha.size() >= 1;
     }
   }
 }
